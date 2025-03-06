@@ -222,4 +222,30 @@ declare namespace Api {
       children?: MenuTree[];
     };
   }
+
+  /** 后端接口返回的数据结构 */
+  interface Response<T = any> {
+    /** 状态码 */
+    code: string | number;
+    /** 接口数据 */
+    data: T;
+    /** 接口消息 */
+    msg: string;
+  }
+
+  /** FastAPI错误响应 */
+  interface FastAPIError {
+    /** 错误详情 */
+    detail: string;
+  }
+
+  /** 后端Demo接口返回的数据结构 */
+  interface DemoResponse<T = any> {
+    /** 状态码 */
+    status: string | number;
+    /** 接口数据 */
+    result: T;
+    /** 接口消息 */
+    message: string;
+  }
 }

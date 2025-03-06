@@ -8,13 +8,11 @@ import { request } from '../request';
  * @returns 登录token信息
  */
 export function fetchLogin(userName: string, password: string) {
+  console.log('Sending login request:', { userName, password });
   return request<Api.Auth.LoginToken>({
     url: '/auth/login',
     method: 'post',
-    data: {
-      userName,
-      password
-    }
+    data: { userName, password }
   });
 }
 
