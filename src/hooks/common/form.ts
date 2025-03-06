@@ -4,6 +4,11 @@ import type { FormInst } from 'naive-ui';
 import { REG_CODE_SIX, REG_EMAIL, REG_PHONE, REG_PWD, REG_USER_NAME } from '@/constants/reg';
 import { $t } from '@/locales';
 
+/**
+ * 表单验证规则Hook
+ *
+ * @returns 表单验证规则和创建规则的方法
+ */
 export function useFormRules() {
   const patternRules = {
     userName: {
@@ -41,9 +46,15 @@ export function useFormRules() {
     email: [createRequiredRule($t('form.email.required')), patternRules.email]
   } satisfies Record<string, App.Global.FormRule[]>;
 
-  /** the default required rule */
+  /** 默认的必填规则 */
   const defaultRequiredRule = createRequiredRule($t('form.required'));
 
+  /**
+   * 创建必填规则
+   *
+   * @param message 错误提示信息
+   * @returns 必填规则对象
+   */
   function createRequiredRule(message: string): App.Global.FormRule {
     return {
       required: true,
@@ -51,7 +62,12 @@ export function useFormRules() {
     };
   }
 
-  /** create a rule for confirming the password */
+  /**
+   * 创建确认密码规则
+   *
+   * @param pwd 密码字段的值或引用
+   * @returns 确认密码规则数组
+   */
   function createConfirmPwdRule(pwd: string | Ref<string> | ComputedRef<string>) {
     const confirmPwdRule: App.Global.FormRule[] = [
       { required: true, message: $t('form.confirmPwd.required') },
@@ -78,13 +94,20 @@ export function useFormRules() {
   };
 }
 
+/**
+ * Naive UI 表单操作Hook
+ *
+ * @returns 表单引用和验证方法
+ */
 export function useNaiveForm() {
   const formRef = ref<FormInst | null>(null);
 
+  /** 验证表单 */
   async function validate() {
     await formRef.value?.validate();
   }
 
+  /** 恢复表单验证状态 */
   async function restoreValidation() {
     formRef.value?.restoreValidation();
   }

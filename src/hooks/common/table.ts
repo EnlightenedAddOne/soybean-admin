@@ -10,17 +10,21 @@ type TableData = NaiveUI.TableData;
 type GetTableData<A extends NaiveUI.TableApiFn> = NaiveUI.GetTableData<A>;
 type TableColumn<T> = NaiveUI.TableColumn<T>;
 
+/**
+ * 表格数据管理Hook
+ *
+ * @param config 表格配置
+ * @returns 表格状态和方法
+ */
 export function useTable<A extends NaiveUI.TableApiFn>(config: NaiveUI.NaiveTableConfig<A>) {
   const scope = effectScope();
   const appStore = useAppStore();
-
-  const isMobile = computed(() => appStore.isMobile);
+  const isMobile = computed(() => appStore.isMobile); // 判断是否为移动端
 
   const { apiFn, apiParams, immediate, showTotal } = config;
 
-  const SELECTION_KEY = '__selection__';
-
-  const EXPAND_KEY = '__expand__';
+  const SELECTION_KEY = '__selection__'; // 选择列的键
+  const EXPAND_KEY = '__expand__'; // 展开列的键
 
   const {
     loading,
@@ -40,7 +44,7 @@ export function useTable<A extends NaiveUI.TableApiFn>(config: NaiveUI.NaiveTabl
     transformer: res => {
       const { records = [], current = 1, size = 10, total = 0 } = res.data || {};
 
-      // Ensure that the size is greater than 0, If it is less than 0, it will cause paging calculation errors.
+      // 确保分页大小大于0，否则会导致分页计算错误
       const pageSize = size <= 0 ? 10 : size;
 
       const recordsWithIndex = records.map((item, index) => {
@@ -115,6 +119,7 @@ export function useTable<A extends NaiveUI.TableApiFn>(config: NaiveUI.NaiveTabl
     immediate
   });
 
+  /* 分页配置 */
   const pagination: PaginationProps = reactive({
     page: 1,
     pageSize: 10,
@@ -149,25 +154,21 @@ export function useTable<A extends NaiveUI.TableApiFn>(config: NaiveUI.NaiveTabl
       : {})
   });
 
-  // this is for mobile, if the system does not support mobile, you can use `pagination` directly
-  const mobilePagination = computed(() => {
-    const p: PaginationProps = {
-      ...pagination,
-      pageSlot: isMobile.value ? 3 : 9,
-      prefix: !isMobile.value && showTotal ? pagination.prefix : undefined
-    };
-
-    return p;
-  });
+  /* 移动端分页适配 */
+  const mobilePagination = computed(() => ({
+    ...pagination,
+    pageSlot: isMobile.value ? 3 : 9, // 移动端显示较少页码
+    prefix: !isMobile.value && showTotal ? pagination.prefix : undefined
+  }));
 
   function updatePagination(update: Partial<PaginationProps>) {
     Object.assign(pagination, update);
   }
 
   /**
-   * get data by page number
+   * 根据页码获取数据
    *
-   * @param pageNum the page number. default is 1
+   * @param pageNum 页码，默认为1
    */
   async function getDataByPage(pageNum: number = 1) {
     updatePagination({
@@ -213,6 +214,13 @@ export function useTable<A extends NaiveUI.TableApiFn>(config: NaiveUI.NaiveTabl
   };
 }
 
+/**
+ * 表格操作Hook
+ *
+ * @param data 表格数据引用
+ * @param getData 数据获取方法
+ * @returns 表格操作相关状态和方法
+ */
 export function useTableOperate<T extends TableData = TableData>(data: Ref<T[]>, getData: () => Promise<void>) {
   const { bool: drawerVisible, setTrue: openDrawer, setFalse: closeDrawer } = useBoolean();
 
@@ -223,7 +231,7 @@ export function useTableOperate<T extends TableData = TableData>(data: Ref<T[]>,
     openDrawer();
   }
 
-  /** the editing row data */
+  /** 编辑行数据 */
   const editingData: Ref<T | null> = ref(null);
 
   function handleEdit(id: T['id']) {
@@ -234,10 +242,10 @@ export function useTableOperate<T extends TableData = TableData>(data: Ref<T[]>,
     openDrawer();
   }
 
-  /** the checked row keys of table */
+  /** 表格中选中的行键 */
   const checkedRowKeys = ref<string[]>([]);
 
-  /** the hook after the batch delete operation is completed */
+  /** 批量删除操作完成后的钩子 */
   async function onBatchDeleted() {
     window.$message?.success($t('common.deleteSuccess'));
 
@@ -246,7 +254,7 @@ export function useTableOperate<T extends TableData = TableData>(data: Ref<T[]>,
     await getData();
   }
 
-  /** the hook after the delete operation is completed */
+  /** 删除操作完成后的钩子 */
   async function onDeleted() {
     window.$message?.success($t('common.deleteSuccess'));
 

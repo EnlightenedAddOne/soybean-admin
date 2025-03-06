@@ -14,15 +14,17 @@ import {
   toggleCssDarkMode
 } from './shared';
 
-/** Theme store */
+/** 主题状态管理 */
 export const useThemeStore = defineStore(SetupStoreId.Theme, () => {
+  // 创建独立的副作用域
   const scope = effectScope();
+  // 获取系统主题偏好
   const osTheme = usePreferredColorScheme();
 
-  /** Theme settings */
+  /** 主题设置 */
   const settings: Ref<App.Theme.ThemeSetting> = ref(initThemeSettings());
 
-  /** Dark mode */
+  /** 暗黑模式状态 */
   const darkMode = computed(() => {
     if (settings.value.themeScheme === 'auto') {
       return osTheme.value === 'dark';
@@ -30,13 +32,13 @@ export const useThemeStore = defineStore(SetupStoreId.Theme, () => {
     return settings.value.themeScheme === 'dark';
   });
 
-  /** grayscale mode */
+  /** 灰度模式状态 */
   const grayscaleMode = computed(() => settings.value.grayscale);
 
-  /** colourWeakness mode */
+  /** 色弱模式状态 */
   const colourWeaknessMode = computed(() => settings.value.colourWeakness);
 
-  /** Theme colors */
+  /** 主题颜色集合 */
   const themeColors = computed(() => {
     const { themeColor, otherColor, isInfoFollowPrimary } = settings.value;
     const colors: App.Theme.ThemeColor = {
@@ -47,75 +49,67 @@ export const useThemeStore = defineStore(SetupStoreId.Theme, () => {
     return colors;
   });
 
-  /** Naive theme */
+  /** Naive UI 主题配置 */
   const naiveTheme = computed(() => getNaiveTheme(themeColors.value, settings.value.recommendColor));
 
-  /**
-   * Settings json
-   *
-   * It is for copy settings
-   */
+  /** 主题设置的JSON字符串 用于复制主题配置 */
   const settingsJson = computed(() => JSON.stringify(settings.value));
 
-  /** Reset store */
+  /** 重置状态 */
   function resetStore() {
     const themeStore = useThemeStore();
-
     themeStore.$reset();
   }
 
   /**
-   * Set theme scheme
+   * 设置主题方案
    *
-   * @param themeScheme
+   * @param themeScheme - 主题方案：'light' | 'dark' | 'auto'
    */
   function setThemeScheme(themeScheme: UnionKey.ThemeScheme) {
     settings.value.themeScheme = themeScheme;
   }
 
   /**
-   * Set grayscale value
+   * 设置灰度模式
    *
-   * @param isGrayscale
+   * @param isGrayscale - 是否启用灰度模式
    */
   function setGrayscale(isGrayscale: boolean) {
     settings.value.grayscale = isGrayscale;
   }
 
   /**
-   * Set colourWeakness value
+   * 设置色弱模式
    *
-   * @param isColourWeakness
+   * @param isColourWeakness - 是否启用色弱模式
    */
   function setColourWeakness(isColourWeakness: boolean) {
     settings.value.colourWeakness = isColourWeakness;
   }
 
-  /** Toggle theme scheme */
+  /** 切换主题方案 在 'light'、'dark'、'auto' 三种方案间循环切换 */
   function toggleThemeScheme() {
     const themeSchemes: UnionKey.ThemeScheme[] = ['light', 'dark', 'auto'];
 
     const index = themeSchemes.findIndex(item => item === settings.value.themeScheme);
-
     const nextIndex = index === themeSchemes.length - 1 ? 0 : index + 1;
-
     const nextThemeScheme = themeSchemes[nextIndex];
 
     setThemeScheme(nextThemeScheme);
   }
 
   /**
-   * Update theme colors
+   * 更新主题颜色
    *
-   * @param key Theme color key
-   * @param color Theme color
+   * @param key - 主题颜色键名
+   * @param color - 颜色值
    */
   function updateThemeColors(key: App.Theme.ThemeColorKey, color: string) {
     let colorValue = color;
 
     if (settings.value.recommendColor) {
-      // get a color palette by provided color and color name, and use the suitable color
-
+      // 根据提供的颜色和颜色名称获取调色板，并使用合适的颜色
       colorValue = getPaletteColorByNumber(color, 500, true);
     }
 
@@ -127,15 +121,15 @@ export const useThemeStore = defineStore(SetupStoreId.Theme, () => {
   }
 
   /**
-   * Set theme layout
+   * 设置主题布局
    *
-   * @param mode Theme layout mode
+   * @param mode - 布局模式
    */
   function setThemeLayout(mode: UnionKey.ThemeLayoutMode) {
     settings.value.layout.mode = mode;
   }
 
-  /** Setup theme vars to global */
+  /** 设置主题变量到全局样式 */
   function setupThemeVarsToGlobal() {
     const { themeTokens, darkThemeTokens } = createThemeToken(
       themeColors.value,
@@ -144,16 +138,17 @@ export const useThemeStore = defineStore(SetupStoreId.Theme, () => {
     );
     addThemeVarsToGlobal(themeTokens, darkThemeTokens);
   }
+
   /**
-   * Set layout reverse horizontal mix
+   * 设置水平混合布局的反转
    *
-   * @param reverse Reverse horizontal mix
+   * @param reverse - 是否反转水平混合布局
    */
   function setLayoutReverseHorizontalMix(reverse: boolean) {
     settings.value.layout.reverseHorizontalMix = reverse;
   }
 
-  /** Cache theme settings */
+  /** 缓存主题设置 */
   function cacheThemeSettings() {
     const isProd = import.meta.env.PROD;
 
@@ -162,14 +157,14 @@ export const useThemeStore = defineStore(SetupStoreId.Theme, () => {
     localStg.set('themeSettings', settings.value);
   }
 
-  // cache theme settings when page is closed or refreshed
+  // 页面关闭或刷新时缓存主题设置
   useEventListener(window, 'beforeunload', () => {
     cacheThemeSettings();
   });
 
-  // watch store
+  // 监听状态变化
   scope.run(() => {
-    // watch dark mode
+    // 监听暗黑模式变化
     watch(
       darkMode,
       val => {
@@ -178,6 +173,7 @@ export const useThemeStore = defineStore(SetupStoreId.Theme, () => {
       { immediate: true }
     );
 
+    // 监听灰度模式和色弱模式变化
     watch(
       [grayscaleMode, colourWeaknessMode],
       val => {
@@ -186,7 +182,7 @@ export const useThemeStore = defineStore(SetupStoreId.Theme, () => {
       { immediate: true }
     );
 
-    // themeColors change, update css vars and storage theme color
+    // 监听主题颜色变化，更新CSS变量并存储主题颜色
     watch(
       themeColors,
       val => {
@@ -197,7 +193,7 @@ export const useThemeStore = defineStore(SetupStoreId.Theme, () => {
     );
   });
 
-  /** On scope dispose */
+  /** 销毁副作用域 */
   onScopeDispose(() => {
     scope.stop();
   });

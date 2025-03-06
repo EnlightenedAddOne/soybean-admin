@@ -1,57 +1,57 @@
 /**
- * Namespace Api
+ * Api 命名空间
  *
- * All backend api type
+ * 所有后端API类型
  */
 declare namespace Api {
   namespace Common {
-    /** common params of paginating */
+    /** 分页通用参数 */
     interface PaginatingCommonParams {
-      /** current page number */
+      /** 当前页码 */
       current: number;
-      /** page size */
+      /** 每页大小 */
       size: number;
-      /** total count */
+      /** 总数量 */
       total: number;
     }
 
-    /** common params of paginating query list data */
+    /** 分页查询列表数据的通用参数 */
     interface PaginatingQueryRecord<T = any> extends PaginatingCommonParams {
       records: T[];
     }
 
-    /** common search params of table */
+    /** 表格通用搜索参数 */
     type CommonSearchParams = Pick<Common.PaginatingCommonParams, 'current' | 'size'>;
 
     /**
-     * enable status
+     * 启用状态
      *
-     * - "1": enabled
-     * - "2": disabled
+     * - "1": 启用
+     * - "2": 禁用
      */
     type EnableStatus = '1' | '2';
 
-    /** common record */
+    /** 通用记录 */
     type CommonRecord<T = any> = {
-      /** record id */
+      /** 记录ID */
       id: number;
-      /** record creator */
+      /** 记录创建者 */
       createBy: string;
-      /** record create time */
+      /** 记录创建时间 */
       createTime: string;
-      /** record updater */
+      /** 记录更新者 */
       updateBy: string;
-      /** record update time */
+      /** 记录更新时间 */
       updateTime: string;
-      /** record status */
+      /** 记录状态 */
       status: EnableStatus | null;
     } & T;
   }
 
   /**
-   * namespace Auth
+   * 认证命名空间
    *
-   * backend api module: "auth"
+   * 后端API模块: "auth"
    */
   namespace Auth {
     interface LoginToken {
@@ -68,9 +68,9 @@ declare namespace Api {
   }
 
   /**
-   * namespace Route
+   * 路由命名空间
    *
-   * backend api module: "route"
+   * 后端API模块: "route"
    */
   namespace Route {
     type ElegantConstRoute = import('@elegant-router/types').ElegantConstRoute;
@@ -86,91 +86,91 @@ declare namespace Api {
   }
 
   /**
-   * namespace SystemManage
+   * 系统管理命名空间
    *
-   * backend api module: "systemManage"
+   * 后端API模块: "systemManage"
    */
   namespace SystemManage {
     type CommonSearchParams = Pick<Common.PaginatingCommonParams, 'current' | 'size'>;
 
-    /** role */
+    /** 角色 */
     type Role = Common.CommonRecord<{
-      /** role name */
+      /** 角色名称 */
       roleName: string;
-      /** role code */
+      /** 角色代码 */
       roleCode: string;
-      /** role description */
+      /** 角色描述 */
       roleDesc: string;
     }>;
 
-    /** role search params */
+    /** 角色搜索参数 */
     type RoleSearchParams = CommonType.RecordNullable<
       Pick<Api.SystemManage.Role, 'roleName' | 'roleCode' | 'status'> & CommonSearchParams
     >;
 
-    /** role list */
+    /** 角色列表 */
     type RoleList = Common.PaginatingQueryRecord<Role>;
 
-    /** all role */
+    /** 所有角色 */
     type AllRole = Pick<Role, 'id' | 'roleName' | 'roleCode'>;
 
     /**
-     * user gender
+     * 用户性别
      *
-     * - "1": "male"
-     * - "2": "female"
+     * - "1": "男"
+     * - "2": "女"
      */
     type UserGender = '1' | '2';
 
-    /** user */
+    /** 用户 */
     type User = Common.CommonRecord<{
-      /** user name */
+      /** 用户名 */
       userName: string;
-      /** user gender */
+      /** 用户性别 */
       userGender: UserGender | null;
-      /** user nick name */
+      /** 用户昵称 */
       nickName: string;
-      /** user phone */
+      /** 用户电话 */
       userPhone: string;
-      /** user email */
+      /** 用户邮箱 */
       userEmail: string;
-      /** user role code collection */
+      /** 用户角色代码集合 */
       userRoles: string[];
     }>;
 
-    /** user search params */
+    /** 用户搜索参数 */
     type UserSearchParams = CommonType.RecordNullable<
       Pick<Api.SystemManage.User, 'userName' | 'userGender' | 'nickName' | 'userPhone' | 'userEmail' | 'status'> &
         CommonSearchParams
     >;
 
-    /** user list */
+    /** 用户列表 */
     type UserList = Common.PaginatingQueryRecord<User>;
 
     /**
-     * menu type
+     * 菜单类型
      *
-     * - "1": directory
-     * - "2": menu
+     * - "1": 目录
+     * - "2": 菜单
      */
     type MenuType = '1' | '2';
 
     type MenuButton = {
       /**
-       * button code
+       * 按钮代码
        *
-       * it can be used to control the button permission
+       * 可用于控制按钮权限
        */
       code: string;
-      /** button description */
+      /** 按钮描述 */
       desc: string;
     };
 
     /**
-     * icon type
+     * 图标类型
      *
-     * - "1": iconify icon
-     * - "2": local icon
+     * - "1": Iconify图标
+     * - "2": 本地图标
      */
     type IconType = '1' | '2';
 
@@ -189,30 +189,30 @@ declare namespace Api {
     >;
 
     type Menu = Common.CommonRecord<{
-      /** parent menu id */
+      /** 父菜单ID */
       parentId: number;
-      /** menu type */
+      /** 菜单类型 */
       menuType: MenuType;
-      /** menu name */
+      /** 菜单名称 */
       menuName: string;
-      /** route name */
+      /** 路由名称 */
       routeName: string;
-      /** route path */
+      /** 路由路径 */
       routePath: string;
-      /** component */
+      /** 组件 */
       component?: string;
-      /** iconify icon name or local icon name */
+      /** Iconify图标名称或本地图标名称 */
       icon: string;
-      /** icon type */
+      /** 图标类型 */
       iconType: IconType;
-      /** buttons */
+      /** 按钮 */
       buttons?: MenuButton[] | null;
-      /** children menu */
+      /** 子菜单 */
       children?: Menu[] | null;
     }> &
       MenuPropsOfRoute;
 
-    /** menu list */
+    /** 菜单列表 */
     type MenuList = Common.PaginatingQueryRecord<Menu>;
 
     type MenuTree = {

@@ -1,6 +1,11 @@
 import { request } from '../request';
 
-/** get role list */
+/**
+ * 获取角色列表
+ *
+ * @param params - 角色搜索参数
+ * @returns 角色列表数据
+ */
 export function fetchGetRoleList(params?: Api.SystemManage.RoleSearchParams) {
   return request<Api.SystemManage.RoleList>({
     url: '/systemManage/getRoleList',
@@ -10,9 +15,9 @@ export function fetchGetRoleList(params?: Api.SystemManage.RoleSearchParams) {
 }
 
 /**
- * get all roles
+ * 获取所有启用的角色
  *
- * these roles are all enabled
+ * @returns 所有启用状态的角色列表
  */
 export function fetchGetAllRoles() {
   return request<Api.SystemManage.AllRole[]>({
@@ -21,7 +26,12 @@ export function fetchGetAllRoles() {
   });
 }
 
-/** get user list */
+/**
+ * 获取用户列表
+ *
+ * @param params - 用户搜索参数
+ * @returns 用户列表数据
+ */
 export function fetchGetUserList(params?: Api.SystemManage.UserSearchParams) {
   return request<Api.SystemManage.UserList>({
     url: '/systemManage/getUserList',
@@ -30,7 +40,7 @@ export function fetchGetUserList(params?: Api.SystemManage.UserSearchParams) {
   });
 }
 
-/** get menu list */
+/** 获取菜单列表(v2版本) */
 export function fetchGetMenuList() {
   return request<Api.SystemManage.MenuList>({
     url: '/systemManage/getMenuList/v2',
@@ -38,7 +48,7 @@ export function fetchGetMenuList() {
   });
 }
 
-/** get all pages */
+/** 获取所有页面路径 */
 export function fetchGetAllPages() {
   return request<string[]>({
     url: '/systemManage/getAllPages',
@@ -46,7 +56,7 @@ export function fetchGetAllPages() {
   });
 }
 
-/** get menu tree */
+/** 获取菜单树结构 */
 export function fetchGetMenuTree() {
   return request<Api.SystemManage.MenuTree[]>({
     url: '/systemManage/getMenuTree',

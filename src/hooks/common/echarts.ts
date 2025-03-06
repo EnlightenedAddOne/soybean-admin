@@ -75,18 +75,18 @@ interface ChartHooks {
 }
 
 /**
- * use echarts
+ * ECharts图表Hook
  *
- * @param optionsFactory echarts options factory function
- * @param darkMode dark mode
+ * @param optionsFactory 图表配置生成函数
+ * @param hooks 图表生命周期钩子
+ * @returns 图表DOM引用和操作方法
  */
 export function useEcharts<T extends ECOption>(optionsFactory: () => T, hooks: ChartHooks = {}) {
   const scope = effectScope();
-
   const themeStore = useThemeStore();
-  const darkMode = computed(() => themeStore.darkMode);
+  const darkMode = computed(() => themeStore.darkMode); // 暗黑模式
 
-  const domRef = ref<HTMLElement | null>(null);
+  const domRef = ref<HTMLElement | null>(null); // 图表容器
   const initialSize = { width: 0, height: 0 };
   const { width, height } = useElementSize(domRef, initialSize);
 
@@ -99,15 +99,13 @@ export function useEcharts<T extends ECOption>(optionsFactory: () => T, hooks: C
       const maskColor = darkMode.value ? 'rgba(0, 0, 0, 0.4)' : 'rgba(255, 255, 255, 0.8)';
 
       instance.showLoading({
-        color: themeStore.themeColor,
+        color: themeStore.themeColor, // 使用主题色
         textColor,
         fontSize: 14,
         maskColor
       });
     },
-    onUpdated = instance => {
-      instance.hideLoading();
-    },
+    onUpdated = instance => instance.hideLoading(),
     onDestroy
   } = hooks;
 

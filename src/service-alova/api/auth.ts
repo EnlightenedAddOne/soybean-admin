@@ -1,34 +1,45 @@
 import { alova } from '../request';
 
 /**
- * Login
+ * 用户登录
  *
- * @param userName User name
- * @param password Password
+ * @param userName - 用户名
+ * @param password - 密码
+ * @returns 登录token信息
  */
 export function fetchLogin(userName: string, password: string) {
   return alova.Post<Api.Auth.LoginToken>('/auth/login', { userName, password });
 }
 
-/** Get user info */
+/** 获取用户信息 */
 export function fetchGetUserInfo() {
   return alova.Get<Api.Auth.UserInfo>('/auth/getUserInfo');
 }
 
-/** Send captcha to target phone */
+/**
+ * 发送验证码到指定手机号
+ *
+ * @param phone - 手机号
+ */
 export function sendCaptcha(phone: string) {
   return alova.Post<null>('/auth/sendCaptcha', { phone });
 }
 
-/** Verify captcha */
+/**
+ * 验证验证码
+ *
+ * @param phone - 手机号
+ * @param code - 验证码
+ */
 export function verifyCaptcha(phone: string, code: string) {
   return alova.Post<null>('/auth/verifyCaptcha', { phone, code });
 }
 
 /**
- * Refresh token
+ * 刷新token
  *
- * @param refreshToken Refresh token
+ * @param refreshToken - 刷新token
+ * @returns 新的token信息
  */
 export function fetchRefreshToken(refreshToken: string) {
   return alova.Post<Api.Auth.LoginToken>(
@@ -43,10 +54,12 @@ export function fetchRefreshToken(refreshToken: string) {
 }
 
 /**
- * return custom backend error
+ * 返回自定义后端错误
  *
- * @param code error code
- * @param msg error message
+ * 用于测试错误处理机制
+ *
+ * @param code - 错误码
+ * @param msg - 错误信息
  */
 export function fetchCustomBackendError(code: string, msg: string) {
   return alova.Get('/auth/error', {

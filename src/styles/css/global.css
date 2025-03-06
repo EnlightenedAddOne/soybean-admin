@@ -1,13 +1,30 @@
+/**
+ * 全局样式定义文件
+ * 用于设置网站的基础样式和布局规则
+ */
+
+/** 导入其他CSS模块 */
+/* 重置默认样式 */
 @import './reset.css';
+/* 进度条样式 */
 @import './nprogress.css';
+/* 过渡动画样式 */
 @import './transition.css';
 
+/**
+ * 设置根容器高度
+ * 确保html、body和#app容器占满整个视口高度
+ */
 html,
 body,
 #app {
   height: 100%;
 }
 
+/**
+ * 处理水平滚动
+ * 防止页面出现水平滚动条
+ */
 html {
   overflow-x: hidden;
 }

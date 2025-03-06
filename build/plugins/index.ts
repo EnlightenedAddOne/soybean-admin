@@ -8,6 +8,13 @@ import { setupUnocss } from './unocss';
 import { setupUnplugin } from './unplugin';
 import { setupHtmlPlugin } from './html';
 
+/**
+ * 设置Vite插件
+ *
+ * @param viteEnv - Vite环境变量
+ * @param buildTime - 构建时间
+ * @returns 插件数组
+ */
 export function setupVitePlugins(viteEnv: Env.ImportMeta, buildTime: string) {
   const plugins: PluginOption = [
     vue(),

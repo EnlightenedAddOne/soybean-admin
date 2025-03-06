@@ -1,25 +1,28 @@
-/*
-1. Prevent padding and border from affecting element width. (https://github.com/mozdevs/cssremedy/issues/4)
-2. Allow adding a border to an element by just adding a border-width. (https://github.com/tailwindcss/tailwindcss/pull/116)
-2. [UnoCSS]: allow to override the default border color with css var `--un-default-border-color`
-*/
+/**
+ * CSS重置样式
+ * 用于统一不同浏览器的默认样式，确保一致的基础样式
+ */
 
+/**
+ * 1. 防止内边距和边框影响元素宽度
+ * 2. 允许仅通过设置边框宽度来添加边框
+ * 3. [UnoCSS]: 允许通过CSS变量 --un-default-border-color 覆盖默认边框颜色
+ */
 *,
 ::before,
 ::after {
   box-sizing: border-box; /* 1 */
   border-width: 0; /* 2 */
   border-style: solid; /* 2 */
-  border-color: var(--un-default-border-color, #e5e7eb); /* 2 */
+  border-color: var(--un-default-border-color, #e5e7eb); /* 3 */
 }
 
-/*
-1. Use a consistent sensible line-height in all browsers.
-2. Prevent adjustments of font size after orientation changes in iOS.
-3. Use a more readable tab size.
-4. Use the user's configured `sans` font-family by default.
-*/
-
+/**
+ * 1. 在所有浏览器中使用一致的行高
+ * 2. 防止iOS设备在方向改变后调整字体大小
+ * 3. 使用更易读的制表符大小
+ * 4. 默认使用用户配置的无衬线字体
+ */
 html {
   line-height: 1.5; /* 1 */
   -webkit-text-size-adjust: 100%; /* 2 */
@@ -42,40 +45,32 @@ html {
     'Noto Color Emoji'; /* 4 */
 }
 
-/*
-1. Remove the margin in all browsers.
-2. Inherit line-height from `html` so users can set them as a class directly on the `html` element.
-*/
-
+/**
+ * 1. 移除所有浏览器的默认外边距
+ * 2. 继承html的行高，允许用户直接在html元素上设置
+ */
 body {
   margin: 0; /* 1 */
   line-height: inherit; /* 2 */
 }
 
-/*
-1. Add the correct height in Firefox.
-2. Correct the inheritance of border color in Firefox. (https://bugzilla.mozilla.org/show_bug.cgi?id=190655)
-3. Ensure horizontal rules are visible by default.
-*/
-
+/**
+ * 1. 在Firefox中添加正确的高度
+ * 2. 修正Firefox中边框颜色的继承
+ * 3. 确保水平分割线默认可见
+ */
 hr {
   height: 0; /* 1 */
   color: inherit; /* 2 */
   border-top-width: 1px; /* 3 */
 }
 
-/*
-Add the correct text decoration in Chrome, Edge, and Safari.
-*/
-
+/** 在Chrome、Edge和Safari中添加正确的文本装饰 */
 abbr:where([title]) {
   text-decoration: underline dotted;
 }
 
-/*
-Remove the default font size and weight for headings.
-*/
-
+/** 移除标题的默认字体大小和字重 */
 h1,
 h2,
 h3,
@@ -86,29 +81,22 @@ h6 {
   font-weight: inherit;
 }
 
-/*
-Reset links to optimize for opt-in styling instead of opt-out.
-*/
-
+/** 重置链接样式，优化为可选加入而非可选退出的样式 */
 a {
   color: inherit;
   text-decoration: inherit;
 }
 
-/*
-Add the correct font weight in Edge and Safari.
-*/
-
+/** 在Edge和Safari中添加正确的字重 */
 b,
 strong {
   font-weight: bolder;
 }
 
-/*
-1. Use the user's configured `mono` font family by default.
-2. Correct the odd `em` font sizing in all browsers.
-*/
-
+/**
+ * 1. 默认使用用户配置的等宽字体
+ * 2. 修正所有浏览器中奇怪的em字体大小
+ */
 code,
 kbd,
 samp,
@@ -117,18 +105,12 @@ pre {
   font-size: 1em; /* 2 */
 }
 
-/*
-Add the correct font size in all browsers.
-*/
-
+/** 在所有浏览器中添加正确的字体大小 */
 small {
   font-size: 80%;
 }
 
-/*
-Prevent `sub` and `sup` elements from affecting the line height in all browsers.
-*/
-
+/** 防止sub和sup元素影响所有浏览器的行高 */
 sub,
 sup {
   font-size: 75%;
@@ -145,24 +127,22 @@ sup {
   top: -0.5em;
 }
 
-/*
-1. Remove text indentation from table contents in Chrome and Safari. (https://bugs.chromium.org/p/chromium/issues/detail?id=999088, https://bugs.webkit.org/show_bug.cgi?id=201297)
-2. Correct table border color inheritance in all Chrome and Safari. (https://bugs.chromium.org/p/chromium/issues/detail?id=935729, https://bugs.webkit.org/show_bug.cgi?id=195016)
-3. Remove gaps between table borders by default.
-*/
-
+/**
+ * 1. 移除Chrome和Safari中表格内容的文本缩进
+ * 2. 修正所有Chrome和Safari中表格边框颜色的继承
+ * 3. 默认移除表格边框之间的间隙
+ */
 table {
   text-indent: 0; /* 1 */
   border-color: inherit; /* 2 */
   border-collapse: collapse; /* 3 */
 }
 
-/*
-1. Change the font styles in all browsers.
-2. Remove the margin in Firefox and Safari.
-3. Remove default padding in all browsers.
-*/
-
+/**
+ * 1. 在所有浏览器中更改字体样式
+ * 2. 移除Firefox和Safari中的外边距
+ * 3. 移除所有浏览器中的默认内边距
+ */
 button,
 input,
 optgroup,
@@ -179,102 +159,74 @@ textarea {
   padding: 0; /* 3 */
 }
 
-/*
-Remove the inheritance of text transform in Edge and Firefox.
-*/
-
+/** 移除Edge和Firefox中文本转换的继承 */
 button,
 select {
   text-transform: none;
 }
 
-/*
-1. Correct the inability to style clickable types in iOS and Safari.
-2. Remove default button styles.
-*/
-
+/**
+ * 1. 修正iOS和Safari中无法设置可点击类型的样式
+ * 2. 移除默认的按钮样式
+ */
 button,
 [type='button'],
 [type='reset'],
 [type='submit'] {
   -webkit-appearance: button; /* 1 */
-  /* background-color: transparent;  */
   background-image: none; /* 2 */
 }
 
-/*
-Use the modern Firefox focus style for all focusable elements.
-*/
-
+/** 为所有可聚焦元素使用现代Firefox焦点样式 */
 :-moz-focusring {
   outline: auto;
 }
 
-/*
-Remove the additional `:invalid` styles in Firefox. (https://github.com/mozilla/gecko-dev/blob/2f9eacd9d3d995c937b4251a5557d95d494c9be1/layout/style/res/forms.css#L728-L737)
-*/
-
+/** 移除Firefox中额外的:invalid样式 */
 :-moz-ui-invalid {
   box-shadow: none;
 }
 
-/*
-Add the correct vertical alignment in Chrome and Firefox.
-*/
-
+/** 添加Chrome和Firefox中正确的垂直对齐 */
 progress {
   vertical-align: baseline;
 }
 
-/*
-Correct the cursor style of increment and decrement buttons in Safari.
-*/
-
+/** 修正Safari中增减按钮的光标样式 */
 ::-webkit-inner-spin-button,
 ::-webkit-outer-spin-button {
   height: auto;
 }
 
-/*
-1. Correct the odd appearance in Chrome and Safari.
-2. Correct the outline style in Safari.
-*/
-
+/**
+ * 1. 修正Chrome和Safari中的奇怪外观
+ * 2. 修正Safari中的轮廓样式
+ */
 [type='search'] {
   -webkit-appearance: textfield; /* 1 */
   outline-offset: -2px; /* 2 */
 }
 
-/*
-Remove the inner padding in Chrome and Safari on macOS.
-*/
-
+/** 移除macOS上Chrome和Safari中的内边距 */
 ::-webkit-search-decoration {
   -webkit-appearance: none;
 }
 
-/*
-1. Correct the inability to style clickable types in iOS and Safari.
-2. Change font properties to `inherit` in Safari.
-*/
-
+/**
+ * 1. 修正iOS和Safari中无法设置可点击类型的样式
+ * 2. 在Safari中更改字体属性为inherit
+ */
 ::-webkit-file-upload-button {
   -webkit-appearance: button; /* 1 */
   font: inherit; /* 2 */
 }
 
-/*
-Add the correct display in Chrome and Safari.
-*/
-
+/** 在Chrome和Safari中添加正确的显示 */
 summary {
   display: list-item;
 }
 
-/*
-Removes the default spacing and border for appropriate elements.
-*/
-
+/** 移除适当元素的默认间距和边框 */
 blockquote,
 dl,
 dd,
@@ -308,47 +260,36 @@ menu {
   padding: 0;
 }
 
-/*
-Prevent resizing textareas horizontally by default.
-*/
-
+/** 默认防止水平调整文本域 */
 textarea {
   resize: vertical;
 }
 
-/*
-1. Reset the default placeholder opacity in Firefox. (https://github.com/tailwindlabs/tailwindcss/issues/3300)
-2. Set the default placeholder color to the user's configured gray 400 color.
-*/
-
+/**
+ * 1. 重置Firefox中的默认占位符透明度
+ * 2. 设置默认占位符颜色为用户配置的灰色400
+ */
 input::placeholder,
 textarea::placeholder {
   opacity: 1; /* 1 */
   color: #9ca3af; /* 2 */
 }
 
-/*
-Set the default cursor for buttons.
-*/
-
+/** 设置按钮的默认光标 */
 button,
 [role='button'] {
   cursor: pointer;
 }
 
-/*
-Make sure disabled buttons don't get the pointer cursor.
-*/
+/** 确保禁用的按钮不会显示指针光标 */
 :disabled {
   cursor: default;
 }
 
-/*
-1. Make replaced elements `display: block` by default. (https://github.com/mozdevs/cssremedy/issues/14)
-2. Add `vertical-align: middle` to align replaced elements more sensibly by default. (https://github.com/jensimmons/cssremedy/issues/14#issuecomment-634934210)
-   This can trigger a poorly considered lint error in some tools but is included by design.
-*/
-
+/**
+ * 1. 默认使替换元素display: block
+ * 2. 默认添加vertical-align: middle以更合理地对齐替换元素
+ */
 img,
 svg,
 video,
@@ -361,17 +302,16 @@ object {
   vertical-align: middle; /* 2 */
 }
 
-/*
-Constrain images and videos to the parent width and preserve their intrinsic aspect ratio. (https://github.com/mozdevs/cssremedy/issues/14)
-*/
-
+/**
+ * 限制图片和视频的宽度为父元素宽度，并保持其固有宽高比
+ */
 img,
 video {
   max-width: 100%;
   height: auto;
 }
 
-/* Make elements with the HTML hidden attribute stay hidden by default */
+/** 使具有HTML hidden属性的元素默认保持隐藏 */
 [hidden] {
   display: none;
 }

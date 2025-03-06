@@ -3,70 +3,67 @@ import 'vue-router';
 declare module 'vue-router' {
   interface RouteMeta {
     /**
-     * Title of the route
+     * 路由标题
      *
-     * It can be used in document title
+     * 可用于文档标题
      */
     title: string;
     /**
-     * I18n key of the route
+     * 路由的i18n键
      *
-     * It's used in i18n, if it is set, the title will be ignored
+     * 用于国际化，如果设置，title将被忽略
      */
     i18nKey?: App.I18n.I18nKey | null;
     /**
-     * Roles of the route
+     * 路由权限角色
      *
-     * Route can be accessed if the current user has at least one of the roles
+     * 当前用户拥有任意角色即可访问路由
      *
-     * It only works when the route mode is "static", if the route mode is "dynamic", it will be ignored
+     * 只有在路由模式为"static"时生效，动态路由模式下会被忽略
      */
     roles?: string[];
-    /** Whether to cache the route */
+    /** 是否缓存路由 */
     keepAlive?: boolean | null;
     /**
-     * Is constant route
+     * 是否为常量路由
      *
-     * when it is set to true, there will be no login verification and no permission verification to access the route
+     * 设置为true时，访问该路由无需登录验证和权限验证
      */
     constant?: boolean | null;
     /**
-     * Iconify icon
+     * Iconify图标
      *
-     * It can be used in the menu or breadcrumb
+     * 可用于菜单或面包屑
      */
     icon?: string;
     /**
-     * Local icon
+     * 本地图标
      *
-     * In "src/assets/svg-icon", if it is set, the icon will be ignored
+     * 位于"src/assets/svg-icon"，设置时优先使用本地图标
      */
     localIcon?: string;
-    /** Icon size. width and height are the same. */
+    /** 图标大小（宽高相同） */
     iconFontSize?: number;
-    /** Router order */
+    /** 路由排序 */
     order?: number | null;
-    /** The outer link of the route */
+    /** 路由外链地址 */
     href?: string | null;
-    /** Whether to hide the route in the menu */
+    /** 是否在菜单中隐藏路由 */
     hideInMenu?: boolean | null;
     /**
-     * The menu key will be activated when entering the route
+     * 进入路由时需要激活的菜单键
      *
-     * The route is not in the menu
+     * 适用于路由不在菜单中显示的情况
      *
      * @example
-     *   the route is "user_detail", if it is set to "user_list", the menu "user_list" will be activated
+     *   路由为"user_detail"，若设置为"user_list"，则会激活"user_list"菜单
      */
     activeMenu?: import('@elegant-router/types').RouteKey | null;
-    /**
-     * By default, the same route path will use one tab, even with different query, if set true, the route with
-     * different query will use different tabs
-     */
+    /** 默认情况下，相同路径的路由会共用一个标签页，设置为true时，不同查询参数的路由会使用不同标签页 */
     multiTab?: boolean | null;
-    /** If set, the route will be fixed in tabs, and the value is the order of fixed tabs */
+    /** 固定标签页的索引顺序 */
     fixedIndexInTab?: number | null;
-    /** if set query parameters, it will be automatically carried when entering the route */
+    /** 进入路由时自动携带的查询参数 */
     query?: { key: string; value: string }[] | null;
   }
 }

@@ -10,7 +10,7 @@ declare const TMap: any;
 
 interface Window {
   /**
-   * make baidu map request under https protocol
+   * 在https协议下发起百度地图请求
    *
    * - 0: http
    * - 1: https

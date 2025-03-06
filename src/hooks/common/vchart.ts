@@ -6,9 +6,10 @@ import light from '@visactor/vchart-theme/public/light.json';
 import dark from '@visactor/vchart-theme/public/dark.json';
 import { useThemeStore } from '@/store/modules/theme';
 
+// 注册液态图表类型
 registerLiquidChart();
 
-// register the theme
+// 注册主题
 VChart.ThemeManager.registerTheme('light', light as ITheme);
 VChart.ThemeManager.registerTheme('dark', dark as ITheme);
 
@@ -18,38 +19,41 @@ interface ChartHooks {
   onDestroy?: (chart: VChart) => void | Promise<void>;
 }
 
+/**
+ * 使用VChart图表的Hook
+ *
+ * @param specFactory - 图表配置生成函数
+ * @param hooks - 图表生命周期钩子
+ * @returns 图表DOM引用和操作方法
+ */
 export function useVChart<T extends ISpec>(specFactory: () => T, hooks: ChartHooks = {}) {
-  const scope = effectScope();
+  const scope = effectScope(); // 创建一个独立的响应式作用域
   const themeStore = useThemeStore();
-  const darkMode = computed(() => themeStore.darkMode);
+  const darkMode = computed(() => themeStore.darkMode); // 计算属性：当前是否为暗黑模式
 
-  const domRef = ref<HTMLElement | null>(null);
-  const initialSize = { width: 0, height: 0 };
-  const { width, height } = useElementSize(domRef, initialSize);
+  const domRef = ref<HTMLElement | null>(null); // 图表容器的DOM引用
+  const initialSize = { width: 0, height: 0 }; // 初始尺寸
+  const { width, height } = useElementSize(domRef, initialSize); // 监听元素尺寸变化
 
-  let chart: VChart | null = null;
-  const spec: T = specFactory();
+  let chart: VChart | null = null; // 图表实例
+  const spec: T = specFactory(); // 生成图表配置
 
   const { onRender, onUpdated, onDestroy } = hooks;
 
-  /**
-   * whether can render chart
-   *
-   * when domRef is ready and initialSize is valid
-   */
+  /** 判断是否可以渲染图表 当domRef已准备好且初始尺寸有效时返回true */
   function canRender() {
     return domRef.value && initialSize.width > 0 && initialSize.height > 0;
   }
 
-  /** is chart rendered */
+  /** 判断图表是否已渲染 */
   function isRendered() {
     return Boolean(domRef.value && chart);
   }
 
   /**
-   * update chart spec
+   * 更新图表配置
    *
-   * @param callback callback function
+   * @param callback - 配置更新回调函数
    */
   async function updateSpec(callback: (opts: T, optsFactory: () => T) => ISpec = () => spec) {
     if (!isRendered()) return;
@@ -67,14 +71,15 @@ export function useVChart<T extends ISpec>(specFactory: () => T, hooks: ChartHoo
     await onUpdated?.(chart!);
   }
 
+  /** 设置新的图表配置 */
   function setSpec(newSpec: T) {
     chart?.updateSpec(newSpec);
   }
 
-  /** render chart */
+  /** 渲染图表 */
   async function render() {
     if (!isRendered()) {
-      // apply the theme
+      // 应用主题
       if (darkMode.value) {
         VChart.ThemeManager.setCurrentTheme('dark');
       } else {
@@ -88,12 +93,12 @@ export function useVChart<T extends ISpec>(specFactory: () => T, hooks: ChartHoo
     }
   }
 
-  /** resize chart */
+  /** 调整图表尺寸 */
   function resize() {
     // chart?.resize();
   }
 
-  /** destroy chart */
+  /** 销毁图表 */
   async function destroy() {
     if (!chart) return;
 
@@ -102,7 +107,7 @@ export function useVChart<T extends ISpec>(specFactory: () => T, hooks: ChartHoo
     chart = null;
   }
 
-  /** change chart theme */
+  /** 切换图表主题 */
   async function changeTheme() {
     await destroy();
     await render();
@@ -110,31 +115,31 @@ export function useVChart<T extends ISpec>(specFactory: () => T, hooks: ChartHoo
   }
 
   /**
-   * render chart by size
+   * 根据尺寸渲染图表
    *
-   * @param w width
-   * @param h height
+   * @param w - 宽度
+   * @param h - 高度
    */
   async function renderChartBySize(w: number, h: number) {
     initialSize.width = w;
     initialSize.height = h;
 
-    // size is abnormal, destroy chart
+    // 尺寸异常时销毁图表
     if (!canRender()) {
       await destroy();
-
       return;
     }
 
-    // resize chart
+    // 调整图表尺寸
     if (isRendered()) {
       resize();
     }
 
-    // render chart
+    // 渲染图表
     await render();
   }
 
+  // 监听尺寸和主题变化
   scope.run(() => {
     watch([width, height], ([newWidth, newHeight]) => {
       renderChartBySize(newWidth, newHeight);
@@ -145,6 +150,7 @@ export function useVChart<T extends ISpec>(specFactory: () => T, hooks: ChartHoo
     });
   });
 
+  // 作用域销毁时清理资源
   onScopeDispose(() => {
     destroy();
     scope.stop();

@@ -2,18 +2,18 @@ export {};
 
 declare global {
   export interface Window {
-    /** NProgress instance */
+    /** NProgress实例 */
     NProgress?: import('nprogress').NProgress;
-    /** Loading bar instance */
+    /** 加载条实例 */
     $loadingBar?: import('naive-ui').LoadingBarProviderInst;
-    /** Dialog instance */
+    /** 对话框实例 */
     $dialog?: import('naive-ui').DialogProviderInst;
-    /** Message instance */
+    /** 消息实例 */
     $message?: import('naive-ui').MessageProviderInst;
-    /** Notification instance */
+    /** 通知实例 */
     $notification?: import('naive-ui').NotificationProviderInst;
   }
 
-  /** Build time of the project */
+  /** 项目构建时间 */
   export const BUILD_TIME: string;
 }

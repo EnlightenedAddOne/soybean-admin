@@ -8,12 +8,18 @@ import { NaiveUiResolver } from 'unplugin-vue-components/resolvers';
 import { FileSystemIconLoader } from 'unplugin-icons/loaders';
 import { createSvgIconsPlugin } from 'vite-plugin-svg-icons';
 
+/**
+ * 设置Unplugin插件
+ *
+ * @param viteEnv - Vite环境变量
+ * @returns 插件数组
+ */
 export function setupUnplugin(viteEnv: Env.ImportMeta) {
   const { VITE_ICON_PREFIX, VITE_ICON_LOCAL_PREFIX } = viteEnv;
 
   const localIconPath = path.join(process.cwd(), 'src/assets/svg-icon');
 
-  /** The name of the local icon collection */
+  /** 本地图标集合的名称 */
   const collectionName = VITE_ICON_LOCAL_PREFIX.replace(`${VITE_ICON_PREFIX}-`, '');
 
   const plugins: PluginOption[] = [

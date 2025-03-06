@@ -1,109 +1,108 @@
 /**
- * Namespace Env
+ * Env 命名空间
  *
- * It is used to declare the type of the import.meta object
+ * 用于声明 import.meta 对象的类型
  */
 declare namespace Env {
-  /** The router history mode */
+  /** 路由历史模式 */
   type RouterHistoryMode = 'hash' | 'history' | 'memory';
 
-  /** Interface for import.meta */
+  /** import.meta 接口 */
   interface ImportMeta extends ImportMetaEnv {
-    /** The base url of the application */
+    /** 应用基础地址 */
     readonly VITE_BASE_URL: string;
-    /** The title of the application */
+    /** 应用标题 */
     readonly VITE_APP_TITLE: string;
-    /** The description of the application */
+    /** 应用描述 */
     readonly VITE_APP_DESC: string;
-    /** The router history mode */
+    /** 路由历史模式 */
     readonly VITE_ROUTER_HISTORY_MODE?: RouterHistoryMode;
-    /** The prefix of the iconify icon */
+    /** Iconify 图标前缀 */
     readonly VITE_ICON_PREFIX: 'icon';
     /**
-     * The prefix of the local icon
+     * 本地图标前缀
      *
-     * This prefix is start with the icon prefix
+     * 该前缀需要以图标前缀开头
      */
     readonly VITE_ICON_LOCAL_PREFIX: 'local-icon';
-    /** backend service base url */
+    /** 后端服务基础地址 */
     readonly VITE_SERVICE_BASE_URL: string;
     /**
-     * success code of backend service
+     * 后端服务成功码
      *
-     * when the code is received, the request is successful
+     * 当收到该code时，表示请求成功
      */
     readonly VITE_SERVICE_SUCCESS_CODE: string;
     /**
-     * logout codes of backend service
+     * 后端服务登出码
      *
-     * when the code is received, the user will be logged out and redirected to login page
+     * 当收到该code时，用户将被登出并重定向到登录页
      *
-     * use "," to separate multiple codes
+     * 使用逗号分隔多个code
      */
     readonly VITE_SERVICE_LOGOUT_CODES: string;
     /**
-     * modal logout codes of backend service
+     * 后端服务模态框登出码
      *
-     * when the code is received, the user will be logged out by displaying a modal
+     * 当收到该code时，将通过显示模态框的方式登出用户
      *
-     * use "," to separate multiple codes
+     * 使用逗号分隔多个code
      */
     readonly VITE_SERVICE_MODAL_LOGOUT_CODES: string;
     /**
-     * token expired codes of backend service
+     * 后端服务token过期码
      *
-     * when the code is received, it will refresh the token and resend the request
+     * 当收到该code时，将刷新token并重新发送请求
      *
-     * use "," to separate multiple codes
+     * 使用逗号分隔多个code
      */
     readonly VITE_SERVICE_EXPIRED_TOKEN_CODES: string;
-    /** when the route mode is static, the defined super role */
+    /** 当路由模式为静态时，定义的超级角色 */
     readonly VITE_STATIC_SUPER_ROLE: string;
     /**
-     * other backend service base url
+     * 其他后端服务基础地址
      *
-     * the value is a json
+     * 值为json格式
      */
     readonly VITE_OTHER_SERVICE_BASE_URL: string;
     /**
-     * Whether to enable the http proxy
+     * 是否启用http代理
      *
-     * Only valid in the development environment
+     * 仅在开发环境有效
      */
     readonly VITE_HTTP_PROXY?: CommonType.YesOrNo;
     /**
-     * The auth route mode
+     * 权限路由模式
      *
-     * - Static: the auth routes is generated in front-end
-     * - Dynamic: the auth routes is generated in back-end
+     * - Static: 前端生成权限路由
+     * - Dynamic: 后端生成权限路由
      */
     readonly VITE_AUTH_ROUTE_MODE: 'static' | 'dynamic';
     /**
-     * The home route key
+     * 首页路由key
      *
-     * It only has effect when the auth route mode is static, if the route mode is dynamic, the home route key is
-     * defined in the back-end
+     * 仅在静态路由模式下有效，动态路由模式的首页路由由后端定义
      */
     readonly VITE_ROUTE_HOME: import('@elegant-router/types').LastLevelRouteKey;
     /**
-     * Default menu icon if menu icon is not set
+     * 菜单默认图标（当未设置菜单图标时使用）
      *
-     * Iconify icon name
+     * Iconify 图标名称
      */
     readonly VITE_MENU_ICON: string;
-    /** Whether to build with sourcemap */
+    /** 是否构建sourcemap */
     readonly VITE_SOURCE_MAP?: CommonType.YesOrNo;
     /**
-     * Iconify api provider url
+     * Iconify API 服务地址
      *
-     * If the project is deployed in intranet, you can set the api provider url to the local iconify server
+     * 当项目部署在内网时，可设置为本地图标服务器地址
      *
      * @link https://docs.iconify.design/api/providers.html
      */
     readonly VITE_ICONIFY_URL?: string;
-    /** Used to differentiate storage across different domains */
+    /** 用于区分不同域的存储 */
     readonly VITE_STORAGE_PREFIX?: string;
-    /** Whether to automatically detect updates after configuring application packaging */
+    /** 配置应用打包后是否自动检测更新 */
     readonly VITE_AUTOMATICALLY_DETECT_UPDATE?: CommonType.YesOrNo;
   }
 }

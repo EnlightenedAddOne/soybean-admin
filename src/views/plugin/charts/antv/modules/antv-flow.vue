@@ -85,7 +85,7 @@ defineExpose({ selectNode, graph: graphRef });
 <template>
   <div class="relative">
     <!-- 画布操作栏 -->
-    <div class="absolute left-0 right-0 z-1 flex items-center items-stretch justify-between">
+    <div class="absolute left-0 right-0 z-1 flex items-center justify-between">
       <NButtonGroup size="small" class="bg-white!">
         <NButton @click="zoomOut">
           <icon-mingcute:zoom-out-line />

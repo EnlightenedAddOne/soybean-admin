@@ -2,6 +2,11 @@ import type { RouteMeta } from 'vue-router';
 import ElegantVueRouter from '@elegant-router/vue/vite';
 import type { RouteKey } from '@elegant-router/types';
 
+/**
+ * 设置优雅路由插件
+ *
+ * @returns ElegantVueRouter插件配置
+ */
 export function setupElegantRouter() {
   return ElegantVueRouter({
     layouts: {

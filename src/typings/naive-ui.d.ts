@@ -12,9 +12,9 @@ declare namespace NaiveUI {
   type FlatResponseData<T> = import('@sa/axios').FlatResponseData<T>;
 
   /**
-   * the custom column key
+   * 自定义列键
    *
-   * if you want to add a custom column, you should add a key to this type
+   * 如果你想添加自定义列，你应该在这个类型中添加一个键
    */
   type CustomColumnKey = 'operate';
 
@@ -31,10 +31,10 @@ declare namespace NaiveUI {
   ) => Promise<FlatResponseData<Api.Common.PaginatingQueryRecord<T>>>;
 
   /**
-   * the type of table operation
+   * 表格操作类型
    *
-   * - add: add table item
-   * - edit: edit table item
+   * - add: 添加表格项
+   * - edit: 编辑表格项
    */
   type TableOperateType = 'add' | 'edit';
 
@@ -45,7 +45,7 @@ declare namespace NaiveUI {
     'apiFn' | 'apiParams' | 'columns' | 'immediate'
   > & {
     /**
-     * whether to display the total items count
+     * 是否显示总条目数
      *
      * @default false
      */

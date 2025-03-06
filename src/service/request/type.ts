@@ -1,6 +1,7 @@
+/** 请求实例的状态接口 */
 export interface RequestInstanceState {
-  /** whether the request is refreshing token */
+  /** 是否正在刷新token的标志 */
   refreshTokenFn: Promise<boolean> | null;
-  /** the request error message stack */
+  /** 请求错误消息栈，用于存储和管理错误提示 */
   errMsgStack: string[];
 }

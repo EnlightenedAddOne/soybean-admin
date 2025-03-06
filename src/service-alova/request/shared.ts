@@ -3,6 +3,11 @@ import { localStg } from '@/utils/storage';
 import { fetchRefreshToken } from '../api';
 import type { RequestInstanceState } from './type';
 
+/**
+ * 获取授权头信息
+ *
+ * @returns 返回Bearer token格式的授权信息，如果没有token则返回null
+ */
 export function getAuthorization() {
   const token = localStg.get('token');
   const Authorization = token ? `Bearer ${token}` : null;
@@ -10,14 +15,21 @@ export function getAuthorization() {
   return Authorization;
 }
 
-/** refresh token */
+/**
+ * 处理token刷新
+ *
+ * 1. 获取存储的刷新token
+ * 2. 调用刷新token接口
+ * 3. 更新存储的token信息
+ * 4. 如果刷新失败，则重置状态并抛出错误
+ */
 export async function handleRefreshToken() {
   const { resetStore } = useAuthStore();
 
   const rToken = localStg.get('refreshToken') || '';
   const refreshTokenMethod = fetchRefreshToken(rToken);
 
-  // set the refreshToken role, so that the request will not be intercepted
+  // 设置refreshToken角色，使请求不被拦截
   refreshTokenMethod.meta.authRole = 'refreshToken';
 
   try {
@@ -30,6 +42,17 @@ export async function handleRefreshToken() {
   }
 }
 
+/**
+ * 显示错误消息
+ *
+ * 1. 初始化错误消息栈
+ * 2. 检查消息是否已存在
+ * 3. 如果消息不存在，则添加到栈中并显示
+ * 4. 消息消失后从栈中移除
+ *
+ * @param state - 请求实例状态
+ * @param message - 错误消息
+ */
 export function showErrorMsg(state: RequestInstanceState, message: string) {
   if (!state.errMsgStack?.length) {
     state.errMsgStack = [];

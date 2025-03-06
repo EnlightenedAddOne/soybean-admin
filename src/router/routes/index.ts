@@ -4,7 +4,7 @@ import { layouts, views } from '../elegant/imports';
 import { transformElegantRoutesToVueRoutes } from '../elegant/transform';
 
 /**
- * custom routes
+ * 自定义路由配置
  *
  * @link https://github.com/soybeanjs/elegant-router?tab=readme-ov-file#custom-route
  */
@@ -177,10 +177,15 @@ const customRoutes: CustomRoute[] = [
   }
 ];
 
-/** create routes when the auth route mode is static */
+/**
+ * 创建静态路由配置
+ *
+ * 当路由权限模式为静态时使用此函数创建路由
+ *
+ * @returns 包含固定路由和权限路由的配置对象
+ */
 export function createStaticRoutes() {
   const constantRoutes: ElegantRoute[] = [];
-
   const authRoutes: ElegantRoute[] = [];
 
   [...customRoutes, ...generatedRoutes].forEach(item => {
@@ -198,9 +203,12 @@ export function createStaticRoutes() {
 }
 
 /**
- * Get auth vue routes
+ * 获取权限路由的Vue路由配置
  *
- * @param routes Elegant routes
+ * 将优雅路由转换为Vue路由格式，用于权限路由
+ *
+ * @param routes - 优雅路由配置数组
+ * @returns 转换后的Vue路由配置
  */
 export function getAuthVueRoutes(routes: ElegantConstRoute[]) {
   return transformElegantRoutesToVueRoutes(routes, layouts, views);

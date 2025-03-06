@@ -4,11 +4,10 @@ import type { RouteKey } from '@elegant-router/types';
 import { router as globalRouter } from '@/router';
 
 /**
- * Router push
+ * 路由跳转Hook
  *
- * Jump to the specified route, it can replace function router.push
- *
- * @param inSetup Whether is in vue script setup
+ * @param inSetup 是否在setup上下文中使用
+ * @returns 路由操作方法
  */
 export function useRouterPush(inSetup = true) {
   const router = inSetup ? useRouter() : globalRouter;
@@ -23,6 +22,12 @@ export function useRouterPush(inSetup = true) {
     params?: Record<string, string>;
   }
 
+  /**
+   * 按路由键跳转
+   *
+   * @param key 路由键名
+   * @param options 跳转参数
+   */
   async function routerPushByKey(key: RouteKey, options?: RouterPushOptions) {
     const { query, params } = options || {};
 
@@ -59,13 +64,13 @@ export function useRouterPush(inSetup = true) {
   }
 
   /**
-   * Navigate to login page
+   * 跳转登录页
    *
-   * @param loginModule The login module
-   * @param redirectUrl The redirect url, if not specified, it will be the current route fullPath
+   * @param loginModule 登录模块类型
+   * @param redirectUrl 重定向地址
    */
   async function toLogin(loginModule?: UnionKey.LoginModule, redirectUrl?: string) {
-    const module = loginModule || 'pwd-login';
+    const module = loginModule || 'pwd-login'; // 默认密码登录
 
     const options: RouterPushOptions = {
       params: {
@@ -83,9 +88,9 @@ export function useRouterPush(inSetup = true) {
   }
 
   /**
-   * Toggle login module
+   * 切换登录模块
    *
-   * @param module
+   * @param module 登录模块
    */
   async function toggleLoginModule(module: UnionKey.LoginModule) {
     const query = route.value.query as Record<string, string>;
@@ -94,9 +99,9 @@ export function useRouterPush(inSetup = true) {
   }
 
   /**
-   * Redirect from login
+   * 登录后重定向
    *
-   * @param [needRedirect=true] Whether to redirect after login. Default is `true`
+   * @param needRedirect 是否需要重定向
    */
   async function redirectFromLogin(needRedirect = true) {
     const redirect = route.value.query?.redirect as string;

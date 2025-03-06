@@ -1,82 +1,100 @@
-/* fade */
+/** 过渡动画样式定义 包含多种常用的过渡效果 */
+
+/* 淡入淡出效果 */
 .fade-enter-active,
 .fade-leave-active {
+  /* 设置透明度过渡，使用ease-in-out缓动函数，持续0.3秒 */
   transition: opacity 0.3s ease-in-out;
 }
 .fade-enter-from,
 .fade-leave-to {
+  /* 初始和结束状态设置为完全透明 */
   opacity: 0;
 }
 
-/* fade-slide */
+/* 淡入淡出伴随滑动效果 */
 .fade-slide-leave-active,
 .fade-slide-enter-active {
+  /* 所有属性过渡，持续0.3秒 */
   transition: all 0.3s;
 }
 .fade-slide-enter-from {
+  /* 初始状态：完全透明，向左偏移30px */
   opacity: 0;
   transform: translateX(-30px);
 }
 .fade-slide-leave-to {
+  /* 结束状态：完全透明，向右偏移30px */
   opacity: 0;
   transform: translateX(30px);
 }
 
-/* fade-bottom */
+/* 底部淡入淡出效果 */
 .fade-bottom-enter-active,
 .fade-bottom-leave-active {
+  /* 透明度和变换属性分别设置不同的过渡时间 */
   transition:
     opacity 0.25s,
     transform 0.3s;
 }
 .fade-bottom-enter-from {
+  /* 初始状态：完全透明，向上偏移10% */
   opacity: 0;
   transform: translateY(-10%);
 }
 .fade-bottom-leave-to {
+  /* 结束状态：完全透明，向下偏移10% */
   opacity: 0;
   transform: translateY(10%);
 }
 
-/* fade-scale */
+/* 缩放淡入淡出效果 */
 .fade-scale-leave-active,
 .fade-scale-enter-active {
+  /* 所有属性过渡，持续0.28秒 */
   transition: all 0.28s;
 }
 .fade-scale-enter-from {
+  /* 初始状态：完全透明，放大至1.2倍 */
   opacity: 0;
   transform: scale(1.2);
 }
 .fade-scale-leave-to {
+  /* 结束状态：完全透明，缩小至0.8倍 */
   opacity: 0;
   transform: scale(0.8);
 }
 
-/* zoom-fade */
+/* 缩放渐变效果 */
 .zoom-fade-enter-active,
 .zoom-fade-leave-active {
+  /* 变换和透明度使用不同的过渡时间和缓动函数 */
   transition:
     transform 0.2s,
     opacity 0.3s ease-out;
 }
 .zoom-fade-enter-from {
+  /* 初始状态：完全透明，缩小至0.92倍 */
   opacity: 0;
   transform: scale(0.92);
 }
 .zoom-fade-leave-to {
+  /* 结束状态：完全透明，放大至1.06倍 */
   opacity: 0;
   transform: scale(1.06);
 }
 
-/* zoom-out */
+/* 缩放消失效果 */
 .zoom-out-enter-active,
 .zoom-out-leave-active {
+  /* 透明度和变换使用不同的过渡时间和缓动函数 */
   transition:
     opacity 0.1s ease-in-out,
     transform 0.15s ease-out;
 }
 .zoom-out-enter-from,
 .zoom-out-leave-to {
+  /* 初始和结束状态：完全透明，缩小至0 */
   opacity: 0;
   transform: scale(0);
 }

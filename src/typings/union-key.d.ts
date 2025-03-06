@@ -1,57 +1,57 @@
-/** The union key namespace */
+/** 联合键命名空间 */
 declare namespace UnionKey {
   /**
-   * The login module
+   * 登录模块
    *
-   * - pwd-login: password login
-   * - code-login: phone code login
-   * - register: register
-   * - reset-pwd: reset password
-   * - bind-wechat: bind wechat
+   * - pwd-login: 密码登录
+   * - code-login: 手机验证码登录
+   * - register: 注册
+   * - reset-pwd: 重置密码
+   * - bind-wechat: 绑定微信
    */
   type LoginModule = 'pwd-login' | 'code-login' | 'register' | 'reset-pwd' | 'bind-wechat';
 
-  /** Theme scheme */
+  /** 主题方案 */
   type ThemeScheme = 'light' | 'dark' | 'auto';
 
   /**
-   * Reset cache strategy
+   * 重置缓存策略
    *
-   * - close: re-cache when close page
-   * - refresh: re-cache when refresh page
+   * - close: 关闭页面时重新缓存
+   * - refresh: 刷新页面时重新缓存
    */
   type ResetCacheStrategy = 'close' | 'refresh';
 
   /**
-   * The layout mode
+   * 布局模式
    *
-   * - vertical: the vertical menu in left
-   * - horizontal: the horizontal menu in top
-   * - vertical-mix: two vertical mixed menus in left
-   * - horizontal-mix: the vertical first level menus in left and horizontal child level menus in top
+   * - vertical: 左侧垂直菜单
+   * - horizontal: 顶部水平菜单
+   * - vertical-mix: 左侧两个垂直混合菜单
+   * - horizontal-mix: 左侧垂直一级菜单和顶部水平子级菜单
    */
   type ThemeLayoutMode = 'vertical' | 'horizontal' | 'vertical-mix' | 'horizontal-mix';
 
   /**
-   * The scroll mode when content overflow
+   * 内容溢出时的滚动模式
    *
-   * - wrapper: the wrapper component's root element overflow
-   * - content: the content component overflow
+   * - wrapper: wrapper组件的根元素溢出
+   * - content: content组件溢出
    */
   type ThemeScrollMode = import('@sa/materials').LayoutScrollMode;
 
-  /** Page animate mode */
+  /** 页面动画模式 */
   type ThemePageAnimateMode = 'fade' | 'fade-slide' | 'fade-bottom' | 'fade-scale' | 'zoom-fade' | 'zoom-out' | 'none';
 
   /**
-   * Tab mode
+   * 标签页模式
    *
-   * - chrome: chrome style
-   * - button: button style
+   * - chrome: Chrome风格
+   * - button: 按钮风格
    */
   type ThemeTabMode = import('@sa/materials').PageTabMode;
 
-  /** Unocss animate key */
+  /** Unocss动画键 */
   type UnoCssAnimateKey =
     | 'pulse'
     | 'bounce'
